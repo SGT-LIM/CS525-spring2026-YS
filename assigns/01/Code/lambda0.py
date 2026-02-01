@@ -78,6 +78,15 @@ def term_freevars(tm0):
     free variables in [tm0]. The set returned should be the
     built-in set in Python
     """
+    if isinstance(tm0, term_var):
+        return {tm0.arg1}
+
+    if isinstance(tm0, term_lam):
+        return term_freevars(tm0.arg2) - {tm0.arg1}
+
+    if isinstance(tm0, term_app):
+        return term_freevars(tm0.arg1) | term_freevars(tm0.arg2)
+        
     raise NotImplementedError
 
 ############################################################

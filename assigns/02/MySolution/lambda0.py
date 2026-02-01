@@ -143,8 +143,3 @@ def term_gsubst(tm0, x00, sub):
 # end of [HWXI/CS525-2026-Fall/assigns/02/lambda0.py]
 ############################################################
 ############################################################
-
-print("=== Test 1: variable ===")
-t = TMvar("x")
-print(term_gsubst(t, "x", TMvar("y")))   # 기대: TMvar(y)
-print(term_gsubst(t, "z", TMvar("y")))   # 기대: TMvar(x)
