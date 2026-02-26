@@ -1,0 +1,54 @@
+(* ****** ****** *)
+(* ****** ****** *)
+//
+datatype term =
+(* ****** ****** *)
+|TMvar of strn // var
+|TMlam of (strn, term) // \x.t0
+|TMapp of (term, term) // t1(t2)
+(* ****** ****** *)
+|TMint of sint // signed integers
+|TMbtf of bool // boolean values: true/false
+|TMopr of (strn(*opr*), list(term)(*args*))
+(* ****** ****** *)
+|TMfix of (strn(*f*), strn(*x*), term(*body*))
+|TMif0 of (term(*test*), term(*then*), term(*else*))
+//
+(* ****** ****** *)
+(* ****** ****** *)
+
+datatype dval =
+  | DVint of int
+  | DVbtf of bool
+  | DVclo of (term, list@(strn, dval))
+
+(* ****** ****** *)
+//
+#extern
+fun
+term_eval0(tm0: term): dval
+#extern
+fun
+term_eval1(tm0: term, env: list@(strn, dval)): dval
+//
+#implfun
+term_eval1(tm0, env) =
+(
+case tm0 of
+| TMvar(x01) => denv_find(env, x01) // find the dval associated with x01
+|
+TMapp(tm1, tm2) =>
+let
+val dv1 = term_eval1(tm1, env)
+val dv2 = term_eval1(tm2, env)
+in
+case dv1 of
+| DVclo _ => ....
+  
+)
+//
+(* ****** ****** *)
+(* ****** ****** *)
+(***********************************************************************)
+// end of [HWXI/CS525--2026-Spring/lectures/lecture-02-05.ats]
+(***********************************************************************)
