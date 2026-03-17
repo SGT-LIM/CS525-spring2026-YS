@@ -955,7 +955,7 @@ val-
 TVint(i02) = term_eval01(tm2, env)
 }
 //
-|"||" =>
+|"||" => // HX: shortcut
 let
 val-list_cons(tm1, tms) = tms
 val-list_cons(tm2, tms) = tms
@@ -974,7 +974,7 @@ TVbtf(b02) = term_eval01(tm2, env)}
 //
 end//let
 //
-|"&&" =>
+|"&&" => // HX: shortcut
 let
 val-list_cons(tm1, tms) = tms
 val-list_cons(tm2, tms) = tms

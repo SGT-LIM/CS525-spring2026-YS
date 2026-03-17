@@ -1,0 +1,113 @@
+(* ****** ****** *)
+(*
+Due:
+Tuesday, the 14th of March, 2026
+*)
+(* ****** ****** *)
+
+Assigment 5 (as midterm-1 project)
+
+(* ****** ****** *)
+
+This is a project assignment which tests your understanding of the
+first phase of compiler construction. You are asked here to compile
+an extended lambda-calculus to Church's pure lambda-calculus.
+
+(* ****** ****** *)
+
+Here is the datatype for terms in the extended lambda-calculus:
+
+datatype term =
+//
+|TMint of sint
+|TMbtf of bool
+//
+(*
+HX:
+This is Church's
+pure lambda-calculus
+*)
+|TMvar of tvar
+|TMlam of (tvar, term)
+|TMapp of (term, term)
+//
+|TMfst of term
+|TMsnd of term
+|TMtup of (term, term)
+//
+|TMopr of (topr, list(term))
+|TMif0 of (term, term, term)
+//
+// TMfix(f, x, ...) =
+// Y(lam f.lam x. ...)
+|TMfix of (tvar, tvar, term)
+//
+|TMlet of (tvar, term, term)
+//
+(* ****** ****** *)
+
+The meaning of the constructor in the datatype
+term should be clear to you (after you have already
+finished Assign04). If there is something unclear,
+please seek clarification by posting a message on Piazza.
+
+(* ****** ****** *)
+
+The main compilation function you implement is given
+the following interface:
+
+fun assign05_compile(source: term): term
+
+Note that the return value of applying assign05_compile to
+a term is also of the type term. However, the return value
+must be a term constructed using only the following constructors:
+//
+|TMvar of tvar
+|TMlam of (tvar, term)
+|TMapp of (term, term)
+//
+That is, the return value is a pure lambda-term.
+
+(* ****** ****** *)
+
+For this compilation, you do not need to handle negative integers.
+However, if you do handle negative integers, you will receive some
+bonus points.
+
+(* ****** ****** *)
+
+Testing:
+
+1. Implement the Fibonacci function in the extended LC and
+   compile it to the pure LC
+    
+2. Implement the factorial function in the extended LC and
+   compile it to the pure LC
+
+3. Implement the following power function in the extended LC and
+   compile it to the pure LC:
+
+   fun power(x: nint, n: nint): nint =
+     if n > 0 then x * power(x, n-1) else 1
+
+(* ****** ****** *)
+
+Reporting:
+
+You are required to write a short report briefly explaining your
+implementation of assign05_compile. In particular, I expect to see
+your answering the following questions in your report:
+
+1. How do you compile integers?
+2. How do you compile booleans?
+3. How do you compile arithmetic operations: +, -, *, /, and %
+4. How do you handle tuples (TMtup, TMfst, and TMsnd)?
+5. How do handle recursion (supported via TMfix)?
+6. How do handle conditional (that is, if-then-else)?
+
+Also, please say a few things about testing. Can your implementation
+compile the above three examples correctly?
+  
+(* ****** ****** *)
+
+(* end of [CS525-2026-Spring/assigns/assign05.atxt] *)
