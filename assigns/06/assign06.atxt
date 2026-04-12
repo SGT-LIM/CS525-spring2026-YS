@@ -1,0 +1,129 @@
+(* ****** ****** *)
+(*
+Due:
+Tuesday, the 14th of April, 2026
+*)
+(* ****** ****** *)
+
+Assigment 6 (as midterm-2 project)
+
+(* ****** ****** *)
+
+This is a project assignment which tests your understanding of the
+second phase of compiler construction. You are asked here to implement
+a type-checker (supporting type-inference) for the following AST.
+In addition, please implement a transpiler that translates programs
+(of the type dexp) into JS code. You can make use of inner functions
+in the generated JS code.
+
+(* ****** ****** *)
+
+Here are the datatypes for types and terms in the extended lambda-calculus
+for this assignment.
+
+(* ****** ****** *)
+(* ****** ****** *)
+//
+(*
+HX-2026-03-19:
+Let's finalize the source language
+of your compiler project for this class
+*)
+//
+datatype styp =
+//
+|STbas of strn(*name*)
+//
+(*
+HX: existential variable
+*)
+|STxyz of (ref(optn(styp))
+//
+|STtup of
+(styp(*T1*), styp(*T2*)) // T1 * T2
+//
+|STfun of
+(styp(*T1*), styp(*T2*)) // T1 -> T2
+//
+|STlazy of styp // lazy evaluation
+//
+|STlist of styp // list constructor
+//
+|STarry of styp // array constructor
+|STstcn of styp // stream constructor
+//
+(* ****** ****** *)
+
+#typedef dvar = strn
+
+datatype dexp =
+//
+| DEint of sint
+| DEbtf of bool
+| DEstr of strn
+//
+| DEvar of dvar
+| DElam of
+( dvar, dexp(*body*))
+| DEapp of
+( dexp(*fun*), dexp(*arg*))
+//
+| DEopr of (strn, list(dexp))
+//
+| DEfst of (dexp)
+| DEsnd of (dexp)
+| DEtup of (dexp, dexp)
+//
+| DEif0 of
+( dexp(*test*)
+, dexp(*then*), dexp(*else*))
+//
+| DEfix of
+( dvar(*fun*)
+, dvar(*arg*), dexp(*body*))
+//
+| DElet of
+( dvar(*x*)
+, dexp(*def*), dexp(*scope*))
+//
+| DElist_nil of ()
+| DElist_cons of (dexp, dexp)
+//
+| DElazy of dexp
+| DEstcn_nil of ()
+| DEstcn_cons of (dexp, dexp)
+//
+| DEarry_size$val of
+  (dexp(*size*), dexp(*val*))
+| DEarry_size$fun of
+  (dexp(*size*), dexp(*fun*))
+//
+(*
+HX: for type annotion
+*)
+| DEanno of (dexp, styp)
+//
+| DElam1 of
+( dvar, styp, dexp(*body*))
+| DEfix1 of
+( dvar, dvar, styp, dexp(*body*), styp)
+//
+(* ****** ****** *)
+(* ****** ****** *)
+
+The meaning of the constructors in the datatypes should be clear
+to you. If there is something unclear, please seek clarification by
+posting a message on Piazza.
+
+(* ****** ****** *)
+(* ****** ****** *)
+
+I expect that you implement the following functions:
+
+fun dexp_tinfer(de0: dexp): styp // type-inference
+fun dexp_trx2js(de0: dexp): void // transpiler for generating JS code
+
+(* ****** ****** *)
+(* ****** ****** *)
+
+(* end of [CS525-2026-Spring/assigns/assign06.atxt] *)
